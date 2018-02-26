@@ -10,7 +10,7 @@ class Bank
 private:
 	string _name;
 	BankAccount account;
-	vector<CustomerAccount> _customerAccounts;
+	vector<CustomerAccount> _customerAccounts{};
 
 public:
 	Bank(string name);

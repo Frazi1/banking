@@ -1,6 +1,5 @@
+#pragma once
 #include <string>
-#include "BankingException.h"
-#include "StringFormatter.h"
 
 using namespace std;
 
@@ -19,7 +18,7 @@ protected:
 
 public:
 	BankAccount(string id);
-	~BankAccount();
+	virtual ~BankAccount();
 	string GetId();
 	double GetSavings();
 	virtual double Withdraw(double amount);

@@ -12,15 +12,15 @@ CustomerAccount::~CustomerAccount()
 {
 }
 
-double CustomerAccount::Withdraw(double amount) 
+double CustomerAccount::Withdraw(const double amount) 
 {
-	double withdrawed = WithdrawInternal(amount);
+	const double withdrawed = WithdrawInternal(amount);
 	_parent.Withdraw(withdrawed);
 	return withdrawed;
 }
 
-void CustomerAccount::TransferTo(BankAccount& targetAccount, double amount)
+void CustomerAccount::TransferTo(BankAccount& targetAccount, const double amount)
 {
-	double withdrawed = Withdraw(amount);
+	const double withdrawed = Withdraw(amount);
 	_parent.TransferTo(targetAccount, withdrawed);
 }

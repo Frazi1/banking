@@ -1,6 +1,7 @@
+#include "stdafx.h"
 #include "Bank.h"
 
-Bank::Bank(string name)
+Bank::Bank(string name): account(BankAccount(name))
 {
 }
 

@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "BankAccount.h"
+#include "BankingException.h"
+#include "StringFormatter.h"
 
-
-BankAccount::BankAccount(string id)
+BankAccount::BankAccount(string id): _savings(0)
 {
 	_id = id;
 	_commission = 0.1f;
@@ -28,7 +29,7 @@ double BankAccount::Withdraw(double amount)
 	return WithdrawInternal(amount);
 }
 
-double BankAccount::WithdrawInternal(double amount)
+double BankAccount::WithdrawInternal(const double amount)
 {
 	if (CanWithdraw(amount)) {
 		_savings -= amount;
@@ -37,18 +38,18 @@ double BankAccount::WithdrawInternal(double amount)
 	throw new BankingException(StringFormatter::Format("Account has %d available. You tried to withdraw %d", GetSavings(), amount));
 }
 
-bool BankAccount::CanWithdraw(double amount)
+bool BankAccount::CanWithdraw(const double amount)
 {
 	return _savings >= amount;
 }
 
-void BankAccount::Put(double amount)
+void BankAccount::Put(const double amount)
 {
 	_savings += amount;
 }
 
-void BankAccount::TransferTo(BankAccount& targetAccount, double amount)
+void BankAccount::TransferTo(BankAccount& targetAccount, const double amount)
 {
-	double transferAmount = amount - amount * _commission;
+	const double transferAmount = amount - amount * _commission;
 	targetAccount.Put(Withdraw(transferAmount));
 }
