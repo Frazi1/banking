@@ -1,16 +1,17 @@
 #pragma once
 #include "BankAccount.h"
 
-class CustomerAccount : public BankAccount
+class customer_account : public bank_account
 {
-public:
-	CustomerAccount(string id, BankAccount& parent);
-	~CustomerAccount();
-
-	double Withdraw(double amount) override;
-	void TransferTo(BankAccount& targetAccount, double amount) override;
 private:
-	BankAccount& _parent;
+	bank_account & parent_;
+	string customer_name_;
+public:
+	customer_account(string customer_name, string id, bank_account& parent);
+	~customer_account();
+
+	double withdraw(double amount) override;
+	void transfer_to(bank_account& targetAccount, double amount) override;
 };
 
 

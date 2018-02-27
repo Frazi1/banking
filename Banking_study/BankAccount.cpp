@@ -3,53 +3,53 @@
 #include "BankingException.h"
 #include "StringFormatter.h"
 
-BankAccount::BankAccount(string id): _savings(0)
+bank_account::bank_account(string id): savings_(0)
 {
-	_id = id;
-	_commission = 0.1f;
+	id_ = id;
+	commission_ = 0.1f;
 }
 
 
-BankAccount::~BankAccount()
+bank_account::~bank_account()
 {
 }
 
-string BankAccount::GetId()
+string bank_account::get_id()
 {
-	return _id;
+	return id_;
 }
 
-double BankAccount::GetSavings()
+double bank_account::get_savings()
 {
-	return _savings;
+	return savings_;
 }
 
-double BankAccount::Withdraw(double amount)
+double bank_account::withdraw(double amount)
 {
-	return WithdrawInternal(amount);
+	return withdraw_internal(amount);
 }
 
-double BankAccount::WithdrawInternal(const double amount)
+double bank_account::withdraw_internal(const double amount)
 {
-	if (CanWithdraw(amount)) {
-		_savings -= amount;
+	if (can_withdraw(amount)) {
+		savings_ -= amount;
 		return amount;
 	}
-	throw new BankingException(StringFormatter::Format("Account has %d available. You tried to withdraw %d", GetSavings(), amount));
+	throw new banking_exception(string_formatter::format("Account has %d available. You tried to withdraw %d", get_savings(), amount));
 }
 
-bool BankAccount::CanWithdraw(const double amount)
+bool bank_account::can_withdraw(const double amount)
 {
-	return _savings >= amount;
+	return savings_ >= amount;
 }
 
-void BankAccount::Put(const double amount)
+void bank_account::put(const double amount)
 {
-	_savings += amount;
+	savings_ += amount;
 }
 
-void BankAccount::TransferTo(BankAccount& targetAccount, const double amount)
+void bank_account::transfer_to(bank_account& target_account, const double amount)
 {
-	const double transferAmount = amount - amount * _commission;
-	targetAccount.Put(Withdraw(transferAmount));
+	const double transfer_amount = amount - amount * commission_;
+	target_account.put(withdraw(transfer_amount));
 }

@@ -4,14 +4,14 @@
 
 using namespace std;
 #pragma once
-class BankingException : public exception
+class banking_exception : public exception
 {
 private:
 	string _message;
 public:
-	BankingException(const string message);
-	~BankingException();
-	string GetMessage();
+	banking_exception(const string message);
+	~banking_exception();
+	string get_message();
 };
 
 

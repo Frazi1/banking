@@ -1,15 +1,25 @@
 #include "stdafx.h"
 #include "Bank.h"
 
-Bank::Bank(string name): account(BankAccount(name))
+bank::bank(const string name): account_(bank_account(name)), name_(name)
 {
 }
 
-Bank::~Bank()
+bank::~bank()
 {
 }
 
-void Bank::AddCustomer(const CustomerAccount & customer)
+string bank::get_name()
 {
-	_customerAccounts.push_back(customer);
+	return name_;
+}
+
+vector<customer_account> bank::get_customer_accounts()
+{
+	return customer_accounts_;
+}
+
+void bank::add_customer(const customer_account & customer)
+{
+	customer_accounts_.push_back(customer);
 }

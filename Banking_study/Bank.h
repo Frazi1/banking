@@ -5,16 +5,18 @@
 
 using namespace std;
 
-class Bank
+class bank
 {
 private:
-	string _name;
-	BankAccount account;
-	vector<CustomerAccount> _customerAccounts{};
+	string name_;
+	bank_account account_;
+	vector<customer_account> customer_accounts_;
 
 public:
-	Bank(string name);
-	~Bank();
+	bank(string name);
+	~bank();
 
-	void AddCustomer(const CustomerAccount& customer);
+	string get_name();
+	vector<customer_account> get_customer_accounts();
+	void add_customer(const customer_account& customer);
 };

@@ -2,16 +2,16 @@
 #include "BankingException.h"
 
 
-BankingException::BankingException(const string message)
+banking_exception::banking_exception(const string message)
 {
 	_message = message;
 }
 
-BankingException::~BankingException()
+banking_exception::~banking_exception()
 {
 }
 
-string BankingException::GetMessage()
+string banking_exception::get_message()
 {
 	return _message;
 }

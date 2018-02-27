@@ -151,6 +151,7 @@
     <ClInclude Include="BankAccount.h" />
     <ClInclude Include="BankingException.h" />
     <ClInclude Include="CustomerAccount.h" />
+    <ClInclude Include="MenuHelper.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringFormatter.h" />
     <ClInclude Include="targetver.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="BankingException.cpp" />
     <ClCompile Include="Banking_study.cpp" />
     <ClCompile Include="CustomerAccount.cpp" />
+    <ClCompile Include="MenuHelper.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

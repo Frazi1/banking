@@ -3,16 +3,16 @@
 #include <cstdarg>  // For va_start, etc.
 #include <memory>    // For std::unique_ptr
 
-StringFormatter::StringFormatter()
+string_formatter::string_formatter()
 {
 }
 
 
-StringFormatter::~StringFormatter()
+string_formatter::~string_formatter()
 {
 }
 
-std::string StringFormatter::Format(const std::string fmt_str, ...) {
+std::string string_formatter::format(const std::string fmt_str, ...) {
 	int n = static_cast<int>(fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
 	std::unique_ptr<char[]> formatted;
 	va_list ap;

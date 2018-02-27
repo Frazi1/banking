@@ -2,25 +2,25 @@
 #include "CustomerAccount.h"
 
 
-CustomerAccount::CustomerAccount(string id, BankAccount& parent) 
-	: BankAccount(id), _parent(parent)
+customer_account::customer_account(const string customer_name, const string id, bank_account& parent) 
+	: bank_account(id), parent_(parent), customer_name_(customer_name)
 {
 }
 
 
-CustomerAccount::~CustomerAccount()
+customer_account::~customer_account()
 {
 }
 
-double CustomerAccount::Withdraw(const double amount) 
+double customer_account::withdraw(const double amount) 
 {
-	const double withdrawed = WithdrawInternal(amount);
-	_parent.Withdraw(withdrawed);
+	const double withdrawed = withdraw_internal(amount);
+	parent_.withdraw(withdrawed);
 	return withdrawed;
 }
 
-void CustomerAccount::TransferTo(BankAccount& targetAccount, const double amount)
+void customer_account::transfer_to(bank_account& targetAccount, const double amount)
 {
-	const double withdrawed = Withdraw(amount);
-	_parent.TransferTo(targetAccount, withdrawed);
+	const double withdrawed = withdraw(amount);
+	parent_.transfer_to(targetAccount, withdrawed);
 }

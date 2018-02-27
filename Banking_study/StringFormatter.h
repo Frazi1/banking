@@ -2,11 +2,11 @@
 #include <string>
 
 #pragma once
-class StringFormatter
+class string_formatter
 {
 public:
-	StringFormatter();
-	~StringFormatter();
-	static std::string Format(const std::string fmt_str, ...);
+	string_formatter();
+	~string_formatter();
+	static std::string format(const std::string fmt_str, ...);
 };
 

@@ -4,25 +4,25 @@
 using namespace std;
 
 #pragma once
-class BankAccount
+class bank_account
 {
 
 private: 
-	string _id;
-	double _savings;
-	float _commission;
+	string id_;
+	double savings_;
+	float commission_;
 
 protected:
-	bool CanWithdraw(double amount);
-	double WithdrawInternal(double amount);
+	bool can_withdraw(double amount);
+	double withdraw_internal(double amount);
 
 public:
-	BankAccount(string id);
-	virtual ~BankAccount();
-	string GetId();
-	double GetSavings();
-	virtual double Withdraw(double amount);
-	virtual void Put(double amount);
-	virtual void TransferTo(BankAccount& targetAccount, double amount);
+	bank_account(string id);
+	virtual ~bank_account();
+	string get_id();
+	double get_savings();
+	virtual double withdraw(double amount);
+	virtual void put(double amount);
+	virtual void transfer_to(bank_account& target_account, double amount);
 };
 
