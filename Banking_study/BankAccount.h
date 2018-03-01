@@ -7,20 +7,22 @@ using namespace std;
 class bank_account
 {
 
-private: 
+protected: 
 	string id_;
 	double savings_;
 	float commission_;
 
-protected:
-	bool can_withdraw(double amount);
+	bool can_withdraw(double amount) const;
 	double withdraw_internal(double amount);
 
 public:
 	bank_account(string id);
 	virtual ~bank_account();
-	string get_id();
-	double get_savings();
+
+	string get_id() const;
+	void set_id(const string& id);
+	double get_savings() const;
+
 	virtual double withdraw(double amount);
 	virtual void put(double amount);
 	virtual void transfer_to(bank_account& target_account, double amount);
