@@ -9,9 +9,9 @@ private:
 	string customer_name_{};
 
 public:
-	customer(const string& customer_name);
+	customer(string customer_name);
 	
-	string get_customer_name();
+	string get_customer_name() const;
 
 	void set_customer_name(const string& customer_name);
 };

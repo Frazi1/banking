@@ -62,7 +62,8 @@ void menu_helper::print_bank_customer_accounts(vector<bank>& banks)
 {
 	print_string("select bank\n");
 	print_banks(banks);
-	bank& bank = banks[read_int()];
+	int bank_id = read_int();
+	bank& bank = banks[bank_id];
 	print_customers(bank);
 }
 
@@ -92,13 +93,13 @@ void menu_helper::print_customers(bank& bank)
 {
 	//print_string("Select bank");
 	//bank bank = banks[read_int()];
-	vector<customer_account> customer_accounts = bank.get_customer_accounts();
+	const vector<customer_account>& customer_accounts = bank.get_customer_accounts();
 	for (int i = 0; i < customer_accounts.size(); i++)
 	{
-		customer_account customer_account = customer_accounts[i];
+		const customer_account& customer_account = customer_accounts[i];
 		print_string(string_formatter::format("%d.%s",
 		                                      i,
-		                                      customer_account.get_customer().get_customer_name()));
+		                                      customer_account.get_customer().get_customer_name().c_str()));
 	}
 }
 
@@ -106,7 +107,7 @@ void menu_helper::create_customer_account(vector<bank>& banks)
 {
 	print_string("Select bank\n");
 	print_banks(banks);
-	bank bank = banks[read_int()];
+	bank& bank = banks[read_int()];
 
 	print_string("customer name:");
 	bank.create_customer_account(read_string());

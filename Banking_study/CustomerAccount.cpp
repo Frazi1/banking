@@ -1,23 +1,26 @@
 #include "stdafx.h"
 #include "CustomerAccount.h"
+#include "MenuHelper.h"
 
 
-customer_account::customer_account(customer& customer, const string id, bank_account& parent)
+customer_account::customer_account(const customer customer, const string id, bank_account& parent)
 	: bank_account(id), customer_(customer), parent_(parent)
 {
 }
 
 customer_account::~customer_account()
-= default;
+{
+	menu_helper::print_string("destructed customer account");
+}
 
 
-customer& customer_account::get_customer() const
+customer customer_account::get_customer() const
 {
 	return customer_;
 }
 
 
-void customer_account::set_customer(const customer& customer) const
+void customer_account::set_customer(const customer customer)
 {
 	customer_ = customer;
 }
