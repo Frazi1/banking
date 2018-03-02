@@ -7,7 +7,11 @@
 using namespace std;
 
 
-void menu_helper::process_input(vector<bank>& banks)
+menu_helper::menu_helper(const vector<bank> banks) : banks_(banks)
+{
+}
+
+void menu_helper::process_input()
 {
 	int input;
 	cin >> input;
@@ -15,18 +19,39 @@ void menu_helper::process_input(vector<bank>& banks)
 	switch (input)
 	{
 	case 1:
-		add_bank(banks);
+		add_bank(banks_);
 		break;
 	case 2:
-		print_banks(banks);
+		print_banks(banks_);
 		break;
 	case 3:
-		create_customer_account(banks);
+		create_customer_account();
 		break;
 	case 4:
-		print_bank_customer_accounts(banks);
+		print_bank_customer_accounts();
+		break;
+	case 5:
+		print_customer_money();
+		break;
+	case 6:
+		put_customer_money();
 		break;
 	}
+}
+
+void menu_helper::print_menu()
+{
+	std::vector<string> items;
+	items.push_back("1. Add bank");
+	items.push_back("2. Print banks");
+	items.push_back("3. Create bank customer");
+	items.push_back("4. Print bank customers");
+	items.push_back("5. Print customer money");
+	items.push_back("6. Put money");
+
+
+	for (const string item : items)
+		print_string(item);
 }
 
 string menu_helper::read_string()
@@ -39,6 +64,35 @@ string menu_helper::read_string()
 int menu_helper::read_int()
 {
 	return stoi(read_string());
+}
+
+
+double menu_helper::read_double()
+{
+	return stod(read_string());
+}
+
+void menu_helper::put_customer_money()
+{
+	bank& bank = select_bank();
+	customer_account& customer_account = select_customer_account(bank);
+	const double amount = read_double();
+	customer_account.put(amount);
+}
+
+bank& menu_helper::select_bank()
+{
+	print_string("select bank\n");
+	print_banks(banks_);
+	return banks_[read_int()];
+}
+
+customer_account& menu_helper::select_customer_account(bank& bank) const
+{
+	print_string("select customer account\n");
+	print_customers(bank);
+	customer_account& customer_account = bank.get_customer_accounts()[read_int()];
+	return customer_account;
 }
 
 void menu_helper::add_bank(vector<bank>& banks)
@@ -58,13 +112,18 @@ void menu_helper::print_banks(vector<bank>& banks)
 	}
 }
 
-void menu_helper::print_bank_customer_accounts(vector<bank>& banks)
+void menu_helper::print_bank_customer_accounts()
 {
-	print_string("select bank\n");
-	print_banks(banks);
-	int bank_id = read_int();
-	bank& bank = banks[bank_id];
+	bank& bank = select_bank();
 	print_customers(bank);
+}
+
+void menu_helper::print_customer_money()
+{
+	bank& bank = select_bank();
+	customer_account& customer_account = select_customer_account(bank);
+	const double savings = customer_account.get_savings();
+	print_string(string_formatter::format("Customer has: %f", savings));
 }
 
 void menu_helper::print_string(const string str)
@@ -77,22 +136,9 @@ void menu_helper::print_string()
 	std::cout << endl;
 }
 
-void menu_helper::print_menu()
-{
-	std::vector<string> items;
-	items.push_back("1. Add bank");
-	items.push_back("2. Print banks");
-	items.push_back("3. Create bank customer");
-	items.push_back("4. Print bank customers");
-
-	for (const string item : items)
-		print_string(item);
-}
 
 void menu_helper::print_customers(bank& bank)
 {
-	//print_string("Select bank");
-	//bank bank = banks[read_int()];
 	const vector<customer_account>& customer_accounts = bank.get_customer_accounts();
 	for (int i = 0; i < customer_accounts.size(); i++)
 	{
@@ -103,11 +149,9 @@ void menu_helper::print_customers(bank& bank)
 	}
 }
 
-void menu_helper::create_customer_account(vector<bank>& banks)
+void menu_helper::create_customer_account()
 {
-	print_string("Select bank\n");
-	print_banks(banks);
-	bank& bank = banks[read_int()];
+	bank& bank = select_bank();
 
 	print_string("customer name:");
 	bank.create_customer_account(read_string());

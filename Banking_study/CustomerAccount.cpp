@@ -37,3 +37,10 @@ void customer_account::transfer_to(bank_account& target_account, const double am
 	const double withdrawed = withdraw(amount);
 	parent_.transfer_to(target_account, withdrawed);
 }
+
+
+void customer_account::put(const double amount)
+{
+	parent_.put(amount);
+	put_internal(amount);
+}

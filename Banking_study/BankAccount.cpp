@@ -47,9 +47,14 @@ bool bank_account::can_withdraw(const double amount) const
 	return savings_ >= amount;
 }
 
-void bank_account::put(const double amount)
+void bank_account::put_internal(const double amount)
 {
 	savings_ += amount;
+}
+
+void bank_account::put(const double amount)
+{
+	put_internal(amount);
 }
 
 void bank_account::transfer_to(bank_account& target_account, const double amount)

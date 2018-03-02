@@ -13,6 +13,7 @@ protected:
 	float commission_;
 
 	bool can_withdraw(double amount) const;
+	void put_internal(double);
 	double withdraw_internal(double amount);
 
 public:

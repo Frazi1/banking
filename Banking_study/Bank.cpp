@@ -17,7 +17,7 @@ string bank::get_name() const
 	return name_;
 }
 
-const vector<customer_account>& bank::get_customer_accounts() const
+vector<customer_account>& bank::get_customer_accounts()
 {
 	return customer_accounts_;
 }

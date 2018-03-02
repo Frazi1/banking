@@ -17,4 +17,5 @@ public:
 
 	double withdraw(double amount) override;
 	void transfer_to(bank_account& target_account, double amount) override;
+	void put(double amount) override;
 };

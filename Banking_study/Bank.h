@@ -18,6 +18,6 @@ public:
 	~bank();
 
 	string get_name() const;
-	const vector<customer_account>& get_customer_accounts() const;
+	vector<customer_account>& get_customer_accounts();
 	void create_customer_account(string name);
 };
