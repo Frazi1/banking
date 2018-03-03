@@ -7,9 +7,10 @@ using namespace std;
 class bank_account
 {
 protected: 
-	string id_;
+	string id_{};
 	double savings_;
 	float commission_;
+	bank* bank_;
 
 	bool can_withdraw(double amount) const;
 	void put_internal(double);
@@ -19,6 +20,7 @@ protected:
 
 public:
 	bank_account(string id, bank* bank);
+
 	virtual ~bank_account();
 
 	string get_id() const;

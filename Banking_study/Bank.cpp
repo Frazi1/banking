@@ -28,7 +28,6 @@ vector<customer_account>& bank::get_customer_accounts()
 
 void bank::create_customer_account(const string name)
 {
-	bank* a = this;
-	customer_account ca = customer_account(customer(name), std::to_string(customers_count_++), this);
+	const customer_account ca = customer_account(customer(name), std::to_string(customers_count_++), this);
 	customer_accounts_.push_back(ca);
 }

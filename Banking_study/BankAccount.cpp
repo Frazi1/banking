@@ -4,12 +4,11 @@
 #include "StringFormatter.h"
 #include "Bank.h"
 
-bank_account::bank_account(string id, bank* bank): savings_(0)
+bank_account::bank_account(string id, bank* bank): savings_(0), bank_(bank)
 {
 	id_ = id;
 	commission_ = 0.1f;
 }
-
 
 bank_account::~bank_account()
 = default;
