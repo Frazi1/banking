@@ -11,7 +11,9 @@ private:
 public:
 	banking_exception(const string message);
 	~banking_exception();
-	string get_message();
+	string get_message() const;
+
+	char const* what() const override;
 };
 
 

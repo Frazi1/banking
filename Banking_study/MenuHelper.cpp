@@ -19,7 +19,7 @@ void menu_helper::process_input()
 	switch (input)
 	{
 	case 1:
-		add_bank(banks_);
+		add_bank();
 		break;
 	case 2:
 		print_banks(banks_);
@@ -39,7 +39,6 @@ void menu_helper::process_input()
 	case 7:
 		print_bank_money();
 		break;
-
 	case 8:
 		transfer_money_to_other_customer();
 		break;
@@ -122,11 +121,12 @@ double menu_helper::select_amount() const
 	return read_double();
 }
 
-void menu_helper::add_bank(vector<bank>& banks)
+void menu_helper::add_bank()
 {
+	print_string("define bank name");
 	const string name = read_string();
 	const bank a = bank(name);
-	banks.push_back(a);
+	banks_.push_back(a);
 }
 
 void menu_helper::print_banks(vector<bank>& banks)
@@ -135,7 +135,6 @@ void menu_helper::print_banks(vector<bank>& banks)
 	{
 		string bank_name = banks[i].get_name();
 		print_string(string_formatter::format("%d.%s", i, bank_name.c_str()));
-		print_string();
 	}
 }
 

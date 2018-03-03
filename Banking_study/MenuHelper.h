@@ -21,7 +21,7 @@ public:
 
 	//Manage account
 	void create_customer_account();
-	static void add_bank(vector<bank>& banks);
+	void add_bank();
 
 	//Input
 	static string read_string();

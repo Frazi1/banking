@@ -35,6 +35,7 @@ double customer_account::withdraw(const double amount)
 void customer_account::transfer_to(bank_account& target_account, const double amount)
 {
 	const double withdrawed = withdraw(amount);
+	if(&target_account != &parent_)
 	parent_.transfer_to(target_account, withdrawed);
 }
 

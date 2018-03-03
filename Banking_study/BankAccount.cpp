@@ -35,11 +35,19 @@ double bank_account::withdraw(const double amount)
 
 double bank_account::withdraw_internal(const double amount)
 {
-	if (can_withdraw(amount)) {
-		savings_ -= amount;
-		return amount;
-	}
-	throw new banking_exception(string_formatter::format("Account has %d available. You tried to withdraw %d", get_savings(), amount));
+	check_withdraw_amount(amount);
+	savings_ -= amount;
+	return amount;
+}
+
+void bank_account::check_withdraw_amount(const double amount) const
+{
+	if (amount <= 0)
+		throw banking_exception(string_formatter::format("Can not withdraw %f", amount));
+
+	if (amount > savings_)
+		throw banking_exception(string_formatter::format("Account %s has only %f available. You tried to withdraw %f", id_,
+		                                                 get_savings(), amount));
 }
 
 bool bank_account::can_withdraw(const double amount) const
@@ -49,6 +57,9 @@ bool bank_account::can_withdraw(const double amount) const
 
 void bank_account::put_internal(const double amount)
 {
+	if (amount <= 0)
+		throw banking_exception(string_formatter::format("Can not put %f", amount));
+
 	savings_ += amount;
 }
 
@@ -57,8 +68,9 @@ void bank_account::put(const double amount)
 	put_internal(amount);
 }
 
-void bank_account::transfer_to(bank_account& target_account, const double amount)
+void bank_account::transfer_to(bank_account& target_account, double amount)
 {
-	const double transfer_amount = amount - amount * commission_;
-	target_account.put(withdraw(transfer_amount));
+	if (&target_account != this)
+		amount -= amount * commission_;
+	target_account.put(amount);
 }

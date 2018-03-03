@@ -6,7 +6,6 @@ using namespace std;
 #pragma once
 class bank_account
 {
-
 protected: 
 	string id_;
 	double savings_;
@@ -15,6 +14,8 @@ protected:
 	bool can_withdraw(double amount) const;
 	void put_internal(double);
 	double withdraw_internal(double amount);
+
+	void check_withdraw_amount(double amount) const;
 
 public:
 	bank_account(string id);
