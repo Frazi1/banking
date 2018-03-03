@@ -90,7 +90,7 @@ void menu_helper::put_customer_money()
 
 void menu_helper::transfer_money_to_other_customer()
 {
-	TODO:
+TODO:
 	bank& source_bank = select_bank("select source bank\n");
 	customer_account& source_customer = select_customer_account(source_bank, "select source customer\n");
 
@@ -150,16 +150,19 @@ void menu_helper::print_bank_customer_accounts()
 void menu_helper::print_customer_money()
 {
 	bank& bank = select_bank();
-	const auto customer_account = select_customer_account(bank);
-	const double savings = customer_account.get_savings();
-	print_string(string_formatter::format("Customer has: %f", savings));
+	vector<customer_account>& accounts = bank.get_customer_accounts();
+	for (auto& a : accounts)
+	{
+		print_string(string_formatter::format("%s has: %f", a.get_customer().get_customer_name().c_str(), a.get_savings()));
+	}
 }
 
 void menu_helper::print_bank_money()
 {
-	bank& bank = select_bank();
-	const double savings = bank.get_savings();
-	print_string(string_formatter::format("Bank has: %f", savings));
+	for (auto& b : banks_)
+	{
+		print_string(string_formatter::format("Bank %s has: %f", b.get_name().c_str(), b.get_savings()));
+	}
 }
 
 void menu_helper::print_string(const string str)
