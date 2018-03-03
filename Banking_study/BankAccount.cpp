@@ -1,10 +1,6 @@
 #include "stdafx.h"
-#include "BankAccount.h"
-#include "BankingException.h"
-#include "StringFormatter.h"
-#include "Bank.h"
 
-bank_account::bank_account(string id, bank* bank): savings_(0), bank_(bank)
+bank_account::bank_account(long id, bank* bank): savings_(0), bank_(bank)
 {
 	id_ = id;
 	commission_ = 0.1f;
@@ -13,12 +9,12 @@ bank_account::bank_account(string id, bank* bank): savings_(0), bank_(bank)
 bank_account::~bank_account()
 = default;
 
-string bank_account::get_id() const
+long bank_account::get_id() const
 {
 	return id_;
 }
 
-void bank_account::set_id(const string& id)
+void bank_account::set_id(const long& id)
 {
 	id_ = id;
 }
@@ -26,6 +22,11 @@ void bank_account::set_id(const string& id)
 double bank_account::get_savings() const
 {
 	return savings_;
+}
+
+bank* bank_account::get_bank() const
+{
+	return bank_;
 }
 
 double bank_account::withdraw(const double amount)

@@ -3,7 +3,7 @@
 #include "MenuHelper.h"
 
 
-customer_account::customer_account(const customer customer, const string id, bank* bank)
+customer_account::customer_account(const customer customer, const long id, bank* bank)
 	: bank_account(id, bank), customer_(customer)
 {
 }
