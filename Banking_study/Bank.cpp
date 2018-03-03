@@ -20,24 +20,24 @@ double bank::get_savings() const
 	return account_->get_savings();
 }
 
-const vector<shared_ptr<customer_account>>& bank::get_customer_accounts() const
+vector<customer_account>& bank::get_customer_accounts()
 {
 	return customer_accounts_;
 }
 
 void bank::create_customer_account(const string name)
 {
-	const auto ca = make_shared<customer_account>(customer_account(customer(name), customers_count_++, this));
+	const auto ca = customer_account(customer(name), customers_count_++, this);
 	customer_accounts_.push_back(ca);
 }
 
-void bank::put_money(long customer_id, const double amount) const
+void bank::put_money(long customer_id, const double amount)
 {
 	const auto it = find_if(
-		customer_accounts_.cbegin(), customer_accounts_.cend(),
-		[&customer_id](const shared_ptr<customer_account> a)
+		customer_accounts_.begin(), customer_accounts_.end(),
+		[&customer_id](customer_account a)
 		{
-			return a->get_id() == customer_id;
+			return a.get_id() == customer_id;
 		});
 
 	if (it == customer_accounts_.end())
@@ -47,5 +47,11 @@ void bank::put_money(long customer_id, const double amount) const
 	const auto index = distance(customer_accounts_.begin(), it);
 
 	account_->put(amount);
-	customer_accounts_.at(index)->put(amount);
+	customer_accounts_.at(index).put(amount);
+}
+
+void bank::transfer_money(auto_ptr<customer_account> source, auto_ptr<customer_account> destination, const double amount)
+{
+	double withdrawed = source.get()->withdraw(amount);
+
 }

@@ -83,22 +83,22 @@ double menu_helper::read_double()
 void menu_helper::put_customer_money()
 {
 	bank& bank = select_bank();
-	const auto customer_account = select_customer_account(bank);
+	customer_account& customer_account = select_customer_account(bank);
 	const double amount = read_double();
-	bank.put_money(customer_account->get_id(), amount);
+	bank.put_money(customer_account.get_id(), amount);
 }
 
 void menu_helper::transfer_money_to_other_customer()
 {
-	//TODO:
-	//bank& source_bank = select_bank("select source bank\n");
-	//customer_account& source_customer = select_customer_account(source_bank, "select source customer\n");
+	TODO:
+	bank& source_bank = select_bank("select source bank\n");
+	auto source_customer = select_customer_account(source_bank, "select source customer\n");
 
-	//bank& destination_bank = select_bank("select destination bank\n");
-	//customer_account& destination_customer = select_customer_account(destination_bank, "select destination customer\n");
+	bank& destination_bank = select_bank("select destination bank\n");
+	auto destination_customer = select_customer_account(destination_bank, "select destination customer\n");
 
-	//const double amount = select_amount();
-	//source_customer.transfer_to(destination_customer, amount);
+	const double amount = select_amount();
+	//source_bank.
 }
 
 bank& menu_helper::select_bank(const string display_message)
@@ -108,13 +108,13 @@ bank& menu_helper::select_bank(const string display_message)
 	return banks_[read_int()];
 }
 
-shared_ptr<customer_account> menu_helper::select_customer_account(bank& bank, const string display_message) const
+customer_account& menu_helper::select_customer_account(bank& bank, const string display_message) const
 {
 	print_string(display_message);
 	print_customers(bank);
 	const int index = read_int();
-	auto ca = bank.get_customer_accounts();
-	const shared_ptr<customer_account> customer_account = ca.at(index);
+	vector<customer_account>& ca = bank.get_customer_accounts();
+	customer_account& customer_account = ca.at(index);
 	return customer_account;
 }
 
@@ -151,7 +151,7 @@ void menu_helper::print_customer_money()
 {
 	bank& bank = select_bank();
 	const auto customer_account = select_customer_account(bank);
-	const double savings = customer_account->get_savings();
+	const double savings = customer_account.get_savings();
 	print_string(string_formatter::format("Customer has: %f", savings));
 }
 
@@ -181,7 +181,7 @@ void menu_helper::print_customers(bank& bank)
 		const auto customer_account = customer_accounts.at(i);
 		print_string(string_formatter::format("%d.%s",
 		                                      i,
-		                                      customer_account->get_customer().get_customer_name().c_str()));
+		                                      customer_account.get_customer().get_customer_name().c_str()));
 	}
 }
 

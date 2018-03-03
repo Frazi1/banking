@@ -68,10 +68,3 @@ void bank_account::put(const double amount)
 {
 	put_internal(amount);
 }
-
-void bank_account::transfer_to(bank_account& target_account, double amount)
-{
-	if (&target_account != this)
-		amount -= amount * commission_;
-	target_account.put(amount);
-}

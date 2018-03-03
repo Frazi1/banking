@@ -36,6 +36,6 @@ public:
 
 	//Selection
 	bank& select_bank(string display_message = "select bank\n");
-	shared_ptr<customer_account> select_customer_account(bank& bank, string display_message = "select customer account\n") const;
+	customer_account& select_customer_account(bank& bank, string display_message = "select customer account\n") const;
 	double select_amount() const;
 };

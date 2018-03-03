@@ -31,5 +31,4 @@ public:
 
 	virtual double withdraw(double amount);
 	virtual void put(double amount);
-	virtual void transfer_to(bank_account& target_account, double amount);
 };
