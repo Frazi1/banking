@@ -12,10 +12,7 @@ protected:
 	float commission_;
 	bank* bank_;
 
-	bool can_withdraw(double amount) const;
-	void put_internal(double);
-	double withdraw_internal(double amount);
-
+	
 	void check_withdraw_amount(double amount) const;
 
 public:
@@ -25,10 +22,13 @@ public:
 
 	long  get_id() const;
 	double get_savings() const;
+	double get_comission() const;
 	bank* get_bank() const;
 	
 	void set_id(const long& id);
-
-	virtual double withdraw(double amount);
-	virtual void put(double amount);
+	bool can_withdraw(double amount) const;
+	double withdraw(double amount);
+	void put(double amount);
+	void transfer(bank_account& target_account, double amount);
+	virtual void accept_transfer(double amount);
 };

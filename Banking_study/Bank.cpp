@@ -50,8 +50,30 @@ void bank::put_money(long customer_id, const double amount)
 	customer_accounts_.at(index).put(amount);
 }
 
-void bank::transfer_money(auto_ptr<customer_account> source, auto_ptr<customer_account> destination, const double amount)
+void bank::transfer_money(bank_account& source, bank_account& destination, const double amount)
 {
-	double withdrawed = source.get()->withdraw(amount);
+	if (source.get_bank() != this)
+		throw banking_exception(string_formatter::format("fuck"));
 
+	const double withdrawed = source.withdraw(amount);
+	const double comission = withdrawed * account_->get_comission();
+	const double result_amount = withdrawed - comission;
+	if (this != destination.get_bank())
+	{
+		if (!account_->can_withdraw(withdrawed))
+			throw banking_exception(string_formatter::format("Tried to withdraw %f. Bank have only %f. Sorry", withdrawed,
+			                                                 account_->get_savings()));
+		account_->withdraw(withdrawed);
+		
+		destination.accept_transfer(result_amount);
+	}
+	else
+	{
+		destination.put(result_amount);
+	}
+}
+
+void bank::accept_transfer(const double amount) const
+{
+	account_->accept_transfer(amount);
 }

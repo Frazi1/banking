@@ -92,13 +92,13 @@ void menu_helper::transfer_money_to_other_customer()
 {
 	TODO:
 	bank& source_bank = select_bank("select source bank\n");
-	auto source_customer = select_customer_account(source_bank, "select source customer\n");
+	customer_account& source_customer = select_customer_account(source_bank, "select source customer\n");
 
 	bank& destination_bank = select_bank("select destination bank\n");
-	auto destination_customer = select_customer_account(destination_bank, "select destination customer\n");
+	customer_account& destination_customer = select_customer_account(destination_bank, "select destination customer\n");
 
 	const double amount = select_amount();
-	//source_bank.
+	source_bank.transfer_money(source_customer, destination_customer, amount);
 }
 
 bank& menu_helper::select_bank(const string display_message)

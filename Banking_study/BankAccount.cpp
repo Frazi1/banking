@@ -24,17 +24,17 @@ double bank_account::get_savings() const
 	return savings_;
 }
 
+double bank_account::get_comission() const
+{
+	return commission_;
+}
+
 bank* bank_account::get_bank() const
 {
 	return bank_;
 }
 
 double bank_account::withdraw(const double amount)
-{
-	return withdraw_internal(amount);
-}
-
-double bank_account::withdraw_internal(const double amount)
 {
 	check_withdraw_amount(amount);
 	savings_ -= amount;
@@ -56,7 +56,7 @@ bool bank_account::can_withdraw(const double amount) const
 	return savings_ >= amount;
 }
 
-void bank_account::put_internal(const double amount)
+void bank_account::put(const double amount)
 {
 	if (amount <= 0)
 		throw banking_exception(string_formatter::format("Can not put %f", amount));
@@ -64,7 +64,12 @@ void bank_account::put_internal(const double amount)
 	savings_ += amount;
 }
 
-void bank_account::put(const double amount)
+void bank_account::transfer(bank_account& target_account, const double amount)
 {
-	put_internal(amount);
+	return bank_->transfer_money(*this, target_account, amount);
+}
+
+void bank_account::accept_transfer(const double amount)
+{
+	put(amount);
 }
