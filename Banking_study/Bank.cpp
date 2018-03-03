@@ -3,14 +3,13 @@
 #include "MenuHelper.h"
 #include "StringFormatter.h"
 
-bank::bank(const string name): name_(name), account_(bank_account(name))
+bank::bank(const string name): name_(name)
 {
+	account_ = new bank_account(name, this);
 }
 
 bank::~bank()
-{
-	menu_helper::print_string(string_formatter::format("destruct bank: %s", name_));
-}
+= default;
 
 string bank::get_name() const
 {
@@ -19,7 +18,7 @@ string bank::get_name() const
 
 double bank::get_savings() const
 {
-	return account_.get_savings();
+	return account_->get_savings();
 }
 
 vector<customer_account>& bank::get_customer_accounts()
@@ -29,6 +28,7 @@ vector<customer_account>& bank::get_customer_accounts()
 
 void bank::create_customer_account(const string name)
 {
-	const customer_account ca = customer_account(customer(name), std::to_string(customers_count_++), account_);
+	bank* a = this;
+	customer_account ca = customer_account(customer(name), std::to_string(customers_count_++), this);
 	customer_accounts_.push_back(ca);
 }

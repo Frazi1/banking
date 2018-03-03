@@ -2,8 +2,9 @@
 #include "BankAccount.h"
 #include "BankingException.h"
 #include "StringFormatter.h"
+#include "Bank.h"
 
-bank_account::bank_account(string id): savings_(0)
+bank_account::bank_account(string id, bank* bank): savings_(0)
 {
 	id_ = id;
 	commission_ = 0.1f;

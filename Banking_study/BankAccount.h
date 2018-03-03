@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
+#include "stdafx.h";
 
+class bank;
 using namespace std;
 
-#pragma once
 class bank_account
 {
 protected: 
@@ -18,7 +18,7 @@ protected:
 	void check_withdraw_amount(double amount) const;
 
 public:
-	bank_account(string id);
+	bank_account(string id, bank* bank);
 	virtual ~bank_account();
 
 	string get_id() const;
@@ -29,4 +29,3 @@ public:
 	virtual void put(double amount);
 	virtual void transfer_to(bank_account& target_account, double amount);
 };
-
