@@ -22,36 +22,33 @@ void menu_helper::process_input()
 		add_bank();
 		break;
 	case 2:
-		print_banks(banks_);
-		break;
-	case 3:
 		create_customer_account();
 		break;
-	case 4:
-		print_bank_customer_accounts();
-		break;
-	case 5:
-		break;
-	case 6:
+	case 3:
 		put_customer_money();
 		break;
-	case 7:
-		break;
-	case 8:
+	case 4:
 		transfer_money_to_other_customer();
 		break;
+	case 5:
+		print_banks(banks_);
+		break;
+	case 6:
+		print_bank_customer_accounts();
+		break;
+	default: ;
 	}
 }
 
 void menu_helper::print_menu()
 {
 	std::vector<string> items;
-	items.push_back("1. Add bank");
-	items.push_back("2. Print banks");
-	items.push_back("3. Create bank customer");
-	items.push_back("4. Print bank customers");
-	items.push_back("6. Put money");
-	items.push_back("8. Transfer money");
+	items.push_back("1. Create bank");
+	items.push_back("2. Create bank customer");
+	items.push_back("3. Put money");
+	items.push_back("4. Transfer money");
+	items.push_back("5. Print banks");
+	items.push_back("6. Print bank customers");
 
 	for (const string item : items)
 		print_string(item);

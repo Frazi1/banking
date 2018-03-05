@@ -35,7 +35,7 @@ void bank::put_money(long customer_id, const double amount)
 {
 	const auto it = find_if(
 		customer_accounts_.begin(), customer_accounts_.end(),
-		[&customer_id](customer_account a)
+		[&customer_id](customer_account& a)
 		{
 			return a.get_id() == customer_id;
 		});
@@ -64,7 +64,7 @@ void bank::transfer_money(bank_account& source, bank_account& destination, const
 			throw banking_exception(string_formatter::format("Tried to withdraw %f. Bank have only %f. Sorry", withdrawed,
 			                                                 account_->get_savings()));
 		account_->withdraw(withdrawed);
-		
+
 		destination.accept_transfer(result_amount);
 	}
 	else
