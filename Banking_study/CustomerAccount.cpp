@@ -23,3 +23,8 @@ void customer_account::accept_transfer(const double amount)
 	put(amount);
 	bank_->accept_transfer(amount);
 }
+
+string customer_account::get_account_name() const
+{
+	return get_customer().get_customer_name();
+}

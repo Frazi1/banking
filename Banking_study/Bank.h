@@ -14,8 +14,7 @@ private:
 	string name_;
 	int customers_count_ = 0;
 	bank_account* account_;
-	vector<customer_account> customer_accounts_{};
-	vector<customer_account> test_vec_{};
+	vector<shared_ptr<customer_account>> customer_accounts_{};
 
 public:
 	 bank(string);
@@ -24,7 +23,7 @@ public:
 
 	string get_name() const;
 	double get_savings() const;
-	vector<customer_account>& get_customer_accounts();
+	vector<shared_ptr<customer_account>>& get_customer_accounts();
 	void create_customer_account(string name);
 	void put_money(long, double);
 	void transfer_money(bank_account& source, bank_account& destination, const double amount);

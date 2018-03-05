@@ -14,4 +14,6 @@ public:
 	void set_customer(customer customer);
 
 	void accept_transfer(double amount) override;
+
+	string get_account_name() const override;
 };

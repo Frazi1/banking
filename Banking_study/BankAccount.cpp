@@ -47,7 +47,8 @@ void bank_account::check_withdraw_amount(const double amount) const
 		throw banking_exception(string_formatter::format("Can not withdraw %f", amount));
 
 	if (amount > savings_)
-		throw banking_exception(string_formatter::format("Account %s has only %f available. You tried to withdraw %f", id_,
+		throw banking_exception(string_formatter::format("Account %s has only %f available. You tried to withdraw %f",
+		                                                 get_account_name().c_str(),
 		                                                 get_savings(), amount));
 }
 
@@ -72,4 +73,9 @@ void bank_account::transfer(bank_account& target_account, const double amount)
 void bank_account::accept_transfer(const double amount)
 {
 	put(amount);
+}
+
+string bank_account::get_account_name() const
+{
+	return bank_->get_name();
 }

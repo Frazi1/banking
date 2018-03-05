@@ -31,4 +31,5 @@ public:
 	void put(double amount);
 	void transfer(bank_account& target_account, double amount);
 	virtual void accept_transfer(double amount);
+	virtual string get_account_name() const;
 };
