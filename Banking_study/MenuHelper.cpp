@@ -31,7 +31,7 @@ void menu_helper::process_input()
 		transfer_money_to_other_customer();
 		break;
 	case 5:
-		print_banks(banks_);
+		print_banks();
 		break;
 	case 6:
 		print_bank_customer_accounts();
@@ -96,7 +96,7 @@ TODO:
 bank& menu_helper::select_bank(const string display_message)
 {
 	print_string(display_message);
-	print_banks(banks_);
+	print_banks();
 	return banks_[read_int()];
 }
 
@@ -124,12 +124,16 @@ void menu_helper::add_bank()
 	banks_.push_back(a);
 }
 
-void menu_helper::print_banks(vector<bank>& banks)
+void menu_helper::print_banks()
 {
-	for (int i = 0; i < banks.size(); i++)
+	for (int i = 0; i < banks_.size(); i++)
 	{
-		string bank_name = banks[i].get_name();
-		print_string(string_formatter::format("%d.%s", i, bank_name.c_str()));
+		bank& bank = banks_[i];
+		string bank_name = bank.get_name();
+		print_string(string_formatter::format("%d.%s - has: %f",
+		                                      i,
+		                                      bank_name.c_str(),
+		                                      bank.get_savings()));
 	}
 }
 
@@ -156,9 +160,10 @@ void menu_helper::print_customers(bank& bank)
 	for (int i = 0; i < customer_accounts.size(); i++)
 	{
 		const auto customer_account = customer_accounts.at(i);
-		print_string(string_formatter::format("%d.%s",
+		print_string(string_formatter::format("%d.%s - has: %f",
 		                                      i,
-		                                      customer_account.get_customer().get_customer_name().c_str()));
+		                                      customer_account.get_customer().get_customer_name().c_str(),
+		                                      customer_account.get_savings()));
 	}
 }
 
