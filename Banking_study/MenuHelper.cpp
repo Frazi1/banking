@@ -7,7 +7,7 @@
 using namespace std;
 
 
-menu_helper::menu_helper(const vector<bank> banks) : banks_(banks)
+menu_helper::menu_helper(const vector<shared_ptr<bank>> banks) : banks_(banks)
 {
 }
 
@@ -97,7 +97,8 @@ bank& menu_helper::select_bank(const string display_message)
 {
 	print_string(display_message);
 	print_banks();
-	return banks_[read_int()];
+	const shared_ptr<bank> bank = banks_[read_int()];
+	return *bank;
 }
 
 customer_account& menu_helper::select_customer_account(bank& bank, const string display_message) const
@@ -120,7 +121,7 @@ void menu_helper::add_bank()
 {
 	print_string("define bank name");
 	const string name = read_string();
-	const bank a = bank(name);
+	const shared_ptr<bank> a = make_shared<bank>(name);
 	banks_.push_back(a);
 }
 
@@ -128,7 +129,7 @@ void menu_helper::print_banks()
 {
 	for (int i = 0; i < banks_.size(); i++)
 	{
-		bank& bank = banks_[i];
+		bank& bank = *banks_[i];
 		string bank_name = bank.get_name();
 		print_string(string_formatter::format("%d.%s - has: %f",
 		                                      i,
