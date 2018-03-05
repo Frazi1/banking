@@ -17,8 +17,6 @@ public:
 	static void print_customers(bank& bank);
 	static void print_banks(vector<bank>& banks);
 	void print_bank_customer_accounts();
-	void print_customer_money();
-	void print_bank_money();
 
 	//Manage account
 	void create_customer_account();
