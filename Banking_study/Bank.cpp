@@ -54,7 +54,9 @@ void bank::put_money(long customer_id, const double amount)
 void bank::transfer_money(bank_account& source, bank_account& destination, const double amount)
 {
 	if (source.get_bank() != this)
-		throw banking_exception(string_formatter::format("fuck"));
+		throw banking_exception(string_formatter::format("Account %s does not belong to bank %s",
+		                                                 source.get_account_name().c_str(),
+		                                                 get_name().c_str()));
 
 	const double withdrawed = source.withdraw(amount);
 	const double comission = withdrawed * account_->get_comission();
@@ -62,7 +64,7 @@ void bank::transfer_money(bank_account& source, bank_account& destination, const
 	if (this != destination.get_bank())
 	{
 		if (!account_->can_withdraw(withdrawed))
-			throw banking_exception(string_formatter::format("Tried to withdraw %f. Bank have only %f. Sorry", withdrawed,
+			throw banking_exception(string_formatter::format("Tried to withdraw %f. Bank has only %f. Sorry", withdrawed,
 			                                                 account_->get_savings()));
 		account_->withdraw(withdrawed);
 
