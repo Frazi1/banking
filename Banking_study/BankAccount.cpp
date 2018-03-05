@@ -1,24 +1,20 @@
 #include "stdafx.h"
-#include "BankAccount.h"
-#include "BankingException.h"
-#include "StringFormatter.h"
 
-bank_account::bank_account(string id): savings_(0)
+bank_account::bank_account(long id, bank* bank): savings_(0), bank_(bank)
 {
 	id_ = id;
 	commission_ = 0.1f;
 }
 
-
 bank_account::~bank_account()
 = default;
 
-string bank_account::get_id() const
+long bank_account::get_id() const
 {
 	return id_;
 }
 
-void bank_account::set_id(const string& id)
+void bank_account::set_id(const long& id)
 {
 	id_ = id;
 }
@@ -28,12 +24,17 @@ double bank_account::get_savings() const
 	return savings_;
 }
 
-double bank_account::withdraw(const double amount)
+double bank_account::get_comission() const
 {
-	return withdraw_internal(amount);
+	return commission_;
 }
 
-double bank_account::withdraw_internal(const double amount)
+bank* bank_account::get_bank() const
+{
+	return bank_;
+}
+
+double bank_account::withdraw(const double amount)
 {
 	check_withdraw_amount(amount);
 	savings_ -= amount;
@@ -46,7 +47,8 @@ void bank_account::check_withdraw_amount(const double amount) const
 		throw banking_exception(string_formatter::format("Can not withdraw %f", amount));
 
 	if (amount > savings_)
-		throw banking_exception(string_formatter::format("Account %s has only %f available. You tried to withdraw %f", id_,
+		throw banking_exception(string_formatter::format("Account %s has only %f available. You tried to withdraw %f",
+		                                                 get_account_name().c_str(),
 		                                                 get_savings(), amount));
 }
 
@@ -55,7 +57,7 @@ bool bank_account::can_withdraw(const double amount) const
 	return savings_ >= amount;
 }
 
-void bank_account::put_internal(const double amount)
+void bank_account::put(const double amount)
 {
 	if (amount <= 0)
 		throw banking_exception(string_formatter::format("Can not put %f", amount));
@@ -63,14 +65,17 @@ void bank_account::put_internal(const double amount)
 	savings_ += amount;
 }
 
-void bank_account::put(const double amount)
+void bank_account::transfer(bank_account& target_account, const double amount)
 {
-	put_internal(amount);
+	return bank_->transfer_money(*this, target_account, amount);
 }
 
-void bank_account::transfer_to(bank_account& target_account, double amount)
+void bank_account::accept_transfer(const double amount)
 {
-	if (&target_account != this)
-		amount -= amount * commission_;
-	target_account.put(amount);
+	put(amount);
+}
+
+string bank_account::get_account_name() const
+{
+	return bank_->get_name();
 }

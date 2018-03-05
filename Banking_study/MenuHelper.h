@@ -1,12 +1,13 @@
 ﻿#pragma once
-#include "Bank.h"
+
+#include "stdafx.h";
 
 class menu_helper
 {
 private:
-	vector<bank> banks_{};
+	vector<shared_ptr<bank>> banks_{};
 public:
-	menu_helper(vector<bank> banks);
+	menu_helper(vector<shared_ptr<bank>> banks);
 
 	void process_input();
 	//printing
@@ -14,10 +15,8 @@ public:
 	static void print_string();
 	static void print_menu();
 	static void print_customers(bank& bank);
-	static void print_banks(vector<bank>& banks);
+	void print_banks();
 	void print_bank_customer_accounts();
-	void print_customer_money();
-	void print_bank_money();
 
 	//Manage account
 	void create_customer_account();
@@ -35,6 +34,7 @@ public:
 
 	//Selection
 	bank& select_bank(string display_message = "select bank\n");
-	customer_account& select_customer_account(bank& bank, string display_message = "select customer account\n") const;
+	shared_ptr<customer_account>& select_customer_account(
+		bank& bank, string display_message = "select customer account\n") const;
 	double select_amount() const;
 };
