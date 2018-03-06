@@ -74,39 +74,39 @@ double menu_helper::read_double()
 
 void menu_helper::put_customer_money()
 {
-	bank& bank = select_bank();
-	shared_ptr<customer_account>& customer_account = select_customer_account(bank);
+	shared_ptr<bank> bank = select_bank();
+	const shared_ptr<customer_account> customer_account = select_customer_account(bank);
 	const double amount = read_double();
-	bank.put_money(customer_account->get_id(), amount);
+	bank->put_money(customer_account->get_id(), amount);
 }
 
 void menu_helper::transfer_money_to_other_customer()
 {
-	bank& source_bank = select_bank("select source bank\n");
+	shared_ptr<bank> source_bank = select_bank("select source bank\n");
 	shared_ptr<customer_account> source_customer = select_customer_account(source_bank, "select source customer\n");
 
-	bank& destination_bank = select_bank("select destination bank\n");
+	shared_ptr<bank> destination_bank = select_bank("select destination bank\n");
 	shared_ptr<customer_account> destination_customer = select_customer_account(
 		destination_bank, "select destination customer\n");
 
 	const double amount = select_amount();
-	source_bank.transfer_money(source_customer, destination_customer, amount);
+	source_bank->transfer_money(source_customer, destination_customer, amount);
 }
 
-bank& menu_helper::select_bank(const string display_message)
+shared_ptr<bank> menu_helper::select_bank(const string display_message)
 {
 	print_string(display_message);
 	print_banks();
 	const shared_ptr<bank> bank = banks_[read_int()];
-	return *bank;
+	return bank;
 }
 
-shared_ptr<customer_account>& menu_helper::select_customer_account(bank& bank, const string display_message) const
+shared_ptr<customer_account> menu_helper::select_customer_account(shared_ptr<bank> bank, const string display_message) const
 {
 	print_string(display_message);
 	print_customers(bank);
 	const int index = read_int();
-	vector<shared_ptr<customer_account>>& ca = bank.get_customer_accounts();
+	vector<shared_ptr<customer_account>>& ca = bank->get_customer_accounts();
 	shared_ptr<customer_account>& customer_account = ca.at(index);
 	return customer_account;
 }
@@ -129,18 +129,18 @@ void menu_helper::print_banks()
 {
 	for (int i = 0; i < banks_.size(); i++)
 	{
-		bank& bank = *banks_[i];
-		string bank_name = bank.get_name();
+		shared_ptr<bank> bank = banks_[i];
+		string bank_name = bank->get_name();
 		print_string(string_formatter::format("%d.%s - has: %f",
 		                                      i,
 		                                      bank_name.c_str(),
-		                                      bank.get_savings()));
+		                                      bank->get_savings()));
 	}
 }
 
 void menu_helper::print_bank_customer_accounts()
 {
-	bank& bank = select_bank();
+	shared_ptr<bank> bank = select_bank();
 	print_customers(bank);
 }
 
@@ -155,9 +155,9 @@ void menu_helper::print_string()
 }
 
 
-void menu_helper::print_customers(bank& bank)
+void menu_helper::print_customers(shared_ptr<bank> bank)
 {
-	auto customer_accounts = bank.get_customer_accounts();
+	auto customer_accounts = bank->get_customer_accounts();
 	for (int i = 0; i < customer_accounts.size(); i++)
 	{
 		const auto customer_account = customer_accounts.at(i);
@@ -170,11 +170,11 @@ void menu_helper::print_customers(bank& bank)
 
 void menu_helper::create_customer_account()
 {
-	bank& bank = select_bank();
+	shared_ptr<bank> bank = select_bank();
 
 	print_string("customer type: 1.physical, 2.juridic");
 	const customer_type type = static_cast<customer_type>(read_int());
 	print_string("customer name:");
 	const string name = read_string();
-	bank.create_customer_account(name, type);
+	bank->create_customer_account(name, type);
 }
