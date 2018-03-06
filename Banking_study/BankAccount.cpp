@@ -16,7 +16,7 @@ double bank_account::get_comission() const
 
 void bank_account::transfer(const shared_ptr<account_base> target_account, const double amount)
 {
-	return bank_->transfer_money(make_shared<bank_account>(*this), target_account, amount);
+	return bank_->transfer_money(shared_ptr<bank_account>(this), target_account, amount);
 }
 
 void bank_account::accept_transfer(const double amount)

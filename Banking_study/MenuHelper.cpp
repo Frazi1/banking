@@ -7,7 +7,7 @@
 using namespace std;
 
 
-menu_helper::menu_helper(const vector<shared_ptr<bank>> banks) : banks_(banks)
+menu_helper::menu_helper(shared_ptr<vector<shared_ptr<bank>>> banks) : banks_(banks)
 {
 }
 
@@ -90,14 +90,14 @@ void menu_helper::transfer_money_to_other_customer()
 		destination_bank, "select destination customer\n");
 
 	const double amount = select_amount();
-	source_bank->transfer_money(source_customer, destination_customer, amount);
+	source_customer->transfer(destination_customer, amount);
 }
 
 shared_ptr<bank> menu_helper::select_bank(const string display_message)
 {
 	print_string(display_message);
 	print_banks();
-	const shared_ptr<bank> bank = banks_[read_int()];
+	const shared_ptr<bank> bank = banks_->at(read_int());
 	return bank;
 }
 
@@ -107,7 +107,7 @@ shared_ptr<customer_account> menu_helper::select_customer_account(shared_ptr<ban
 	print_customers(bank);
 	const int index = read_int();
 	vector<shared_ptr<customer_account>>& ca = bank->get_customer_accounts();
-	shared_ptr<customer_account>& customer_account = ca.at(index);
+	shared_ptr<customer_account> customer_account = ca.at(index);
 	return customer_account;
 }
 
@@ -122,14 +122,14 @@ void menu_helper::add_bank()
 	print_string("define bank name");
 	const string name = read_string();
 	const shared_ptr<bank> a = make_shared<bank>(0, 0.1f, name);
-	banks_.push_back(a);
+	banks_->push_back(a);
 }
 
 void menu_helper::print_banks()
 {
-	for (int i = 0; i < banks_.size(); i++)
+	for (int i = 0; i < banks_->size(); i++)
 	{
-		shared_ptr<bank> bank = banks_[i];
+		const shared_ptr<bank> bank = banks_->at(i);
 		string bank_name = bank->get_name();
 		print_string(string_formatter::format("%d.%s - has: %f",
 		                                      i,

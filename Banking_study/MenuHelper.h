@@ -5,9 +5,9 @@
 class menu_helper
 {
 private:
-	vector<shared_ptr<bank>> banks_{};
+	shared_ptr<vector<shared_ptr<bank>>> banks_{};
 public:
-	menu_helper(vector<shared_ptr<bank>> banks);
+	menu_helper(shared_ptr<vector<shared_ptr<bank>>> banks);
 
 	void process_input();
 	//printing

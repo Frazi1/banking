@@ -3,7 +3,11 @@
 
 class bank;
 
-enum class customer_type { juridic, physical };
+enum class customer_type 
+{ 
+	physical = 1,
+	juridic = 2
+};
 
 class customer_account : public account_base
 {
@@ -18,7 +22,7 @@ public:
 	void set_customer(customer customer);
 
 	void accept_transfer(double amount) override;
-	void transfer(shared_ptr<account_base> target_account, const double amount) override = 0;
+	virtual void transfer(shared_ptr<account_base> target_account, const double amount) override;
 	string get_account_name() const override;
 };
 
@@ -26,8 +30,6 @@ class juridic_customer_account : public customer_account
 {
 public:
 	juridic_customer_account(double savings, customer customer, long id, shared_ptr<bank> bank);
-
-	void transfer(shared_ptr<account_base> target_account, double amount) override;
 };
 
 class physical_customer_account : public customer_account

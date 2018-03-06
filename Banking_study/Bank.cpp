@@ -4,7 +4,7 @@
 
 bank::bank(const double savings, const float comission, const string name): name_(name)
 {
-	account_ = make_shared<bank_account>(savings, comission, make_shared<bank>(*this));
+	account_ = make_shared<bank_account>(savings, comission, shared_ptr<bank>(this));
 }
 
 bank::~bank()
@@ -28,14 +28,13 @@ vector<shared_ptr<customer_account>>& bank::get_customer_accounts()
 void bank::create_customer_account(const string name, customer_type type)
 {
 	customer c = customer(name);
-	shared_ptr<bank> bank_ptr = make_shared<bank>(*this);
+	shared_ptr<bank> bank_ptr = shared_ptr<bank>(this);
 	shared_ptr<customer_account> ca;
 	if (type == customer_type::physical)
-	{
 		ca = make_shared<physical_customer_account>(0, c, customers_count_++, bank_ptr);
-	}
 	else if(type == customer_type::juridic)
 		ca = make_shared<juridic_customer_account>(0, c, customers_count_++, bank_ptr);
+	else throw banking_exception("Invalid customer type");
 	customer_accounts_.push_back(ca);
 }
 
@@ -44,7 +43,7 @@ void bank::put_money(long customer_id, const double amount)
 	//TODO: maybe reference?
 	const auto it = find_if(
 		customer_accounts_.begin(), customer_accounts_.end(),
-		[&customer_id](shared_ptr<customer_account>& a)
+		[&customer_id](shared_ptr<customer_account> a)
 		{
 			return a->get_id() == customer_id;
 		});
