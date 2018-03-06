@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AccountBase.h" />
     <ClInclude Include="Bank.h" />
     <ClInclude Include="BankAccount.h" />
     <ClInclude Include="BankingException.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AccountBase.cpp" />
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="BankAccount.cpp" />
     <ClCompile Include="BankingException.cpp" />

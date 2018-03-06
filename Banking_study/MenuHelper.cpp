@@ -83,14 +83,14 @@ void menu_helper::put_customer_money()
 void menu_helper::transfer_money_to_other_customer()
 {
 	bank& source_bank = select_bank("select source bank\n");
-	shared_ptr<customer_account>& source_customer = select_customer_account(source_bank, "select source customer\n");
+	shared_ptr<customer_account> source_customer = select_customer_account(source_bank, "select source customer\n");
 
 	bank& destination_bank = select_bank("select destination bank\n");
-	shared_ptr<customer_account>& destination_customer = select_customer_account(
+	shared_ptr<customer_account> destination_customer = select_customer_account(
 		destination_bank, "select destination customer\n");
 
 	const double amount = select_amount();
-	source_bank.transfer_money(*source_customer, *destination_customer, amount);
+	source_bank.transfer_money(source_customer, destination_customer, amount);
 }
 
 bank& menu_helper::select_bank(const string display_message)
@@ -121,7 +121,7 @@ void menu_helper::add_bank()
 {
 	print_string("define bank name");
 	const string name = read_string();
-	const shared_ptr<bank> a = make_shared<bank>(name);
+	const shared_ptr<bank> a = make_shared<bank>(0, 0.1f, name);
 	banks_.push_back(a);
 }
 
@@ -172,6 +172,9 @@ void menu_helper::create_customer_account()
 {
 	bank& bank = select_bank();
 
+	print_string("customer type: 1.physical, 2.juridic");
+	const customer_type type = static_cast<customer_type>(read_int());
 	print_string("customer name:");
-	bank.create_customer_account(read_string());
+	const string name = read_string();
+	bank.create_customer_account(name, type);
 }
