@@ -45,6 +45,12 @@
     <ClInclude Include="AccountBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="juridic_customer_account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physical_customer_account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -76,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="AccountBase.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="juridic_customer_account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="physical_customer_account.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,17 +25,3 @@ public:
 	virtual void transfer(shared_ptr<account_base> target_account, const double amount) override;
 	string get_account_name() const override;
 };
-
-class juridic_customer_account : public customer_account
-{
-public:
-	juridic_customer_account(double savings, customer customer, long id, shared_ptr<bank> bank);
-};
-
-class physical_customer_account : public customer_account
-{
-public:
-	physical_customer_account(double savings, customer customer, long id, shared_ptr<bank> bank);
-
-	void transfer(shared_ptr<account_base> target_account, double amount) override;
-};
