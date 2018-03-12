@@ -4,7 +4,7 @@
 
 bank::bank(const double savings, const float comission, const string name): name_(name)
 {
-	account_ = make_shared<bank_account>(savings, comission, shared_ptr<bank>(this));
+	account_ = new bank_account(savings, comission, this);
 }
 
 bank::~bank()
@@ -20,7 +20,7 @@ double bank::get_savings() const
 	return account_->get_savings();
 }
 
-vector<shared_ptr<customer_account>>& bank::get_customer_accounts()
+vector<customer_account*>& bank::get_customer_accounts()
 {
 	return customer_accounts_;
 }
@@ -28,12 +28,11 @@ vector<shared_ptr<customer_account>>& bank::get_customer_accounts()
 void bank::create_customer_account(const string name, customer_type type)
 {
 	customer c = customer(name);
-	shared_ptr<bank> bank_ptr = shared_ptr<bank>(this);
-	shared_ptr<customer_account> ca;
+	customer_account* ca;
 	if (type == customer_type::physical)
-		ca = make_shared<physical_customer_account>(0, c, customers_count_++, bank_ptr);
+		ca = new physical_customer_account(0, c, customers_count_++, this);
 	else if(type == customer_type::juridic)
-		ca = make_shared<juridic_customer_account>(0, c, customers_count_++, bank_ptr);
+		ca = new juridic_customer_account(0, c, customers_count_++, this);
 	else throw banking_exception("Invalid customer type");
 	customer_accounts_.push_back(ca);
 }
@@ -43,7 +42,7 @@ void bank::put_money(long customer_id, const double amount)
 	//TODO: maybe reference?
 	const auto it = find_if(
 		customer_accounts_.begin(), customer_accounts_.end(),
-		[&customer_id](shared_ptr<customer_account> a)
+		[&customer_id](customer_account* a)
 		{
 			return a->get_id() == customer_id;
 		});
@@ -58,9 +57,9 @@ void bank::put_money(long customer_id, const double amount)
 	customer_accounts_.at(index)->put(amount);
 }
 
-void bank::transfer_money(shared_ptr<account_base> source, shared_ptr<account_base> destination, const double amount)
+void bank::transfer_money(account_base* source, account_base* destination, const double amount)
 {
-	if (source->get_bank().get() != this)
+	if (source->get_bank() != this)
 		throw banking_exception(string_formatter::format("Account %s does not belong to bank %s",
 		                                                 source->get_account_name().c_str(),
 		                                                 get_name().c_str()));
@@ -68,7 +67,7 @@ void bank::transfer_money(shared_ptr<account_base> source, shared_ptr<account_ba
 	const double withdrawed = source->withdraw(amount);
 	const double comission = withdrawed * account_->get_comission();
 	const double result_amount = withdrawed - comission;
-	if (this != destination->get_bank().get())
+	if (this != destination->get_bank())
 	{
 		if (!account_->can_withdraw(withdrawed))
 			throw banking_exception(string_formatter::format("Tried to withdraw %f. Bank has only %f. Sorry",

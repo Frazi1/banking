@@ -13,8 +13,8 @@ class bank
 private:
 	string name_;
 	int customers_count_ = 0;
-	shared_ptr<bank_account> account_;
-	vector<shared_ptr<customer_account>> customer_accounts_{};
+	bank_account* account_;
+	vector<customer_account*> customer_accounts_{};
 
 public:
 	bank(double, float, string);
@@ -23,9 +23,9 @@ public:
 
 	string get_name() const;
 	double get_savings() const;
-	vector<shared_ptr<customer_account>>& get_customer_accounts();
+	vector<customer_account*>& get_customer_accounts();
 	void create_customer_account(const string name, customer_type type);
 	void put_money(long, double);
-	void transfer_money(shared_ptr<account_base> source, shared_ptr<account_base> destination, const double amount);
+	void transfer_money(account_base* source, account_base* destination, const double amount);
 	void accept_transfer(const double amount) const;
 };

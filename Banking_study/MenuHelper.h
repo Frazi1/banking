@@ -5,16 +5,16 @@
 class menu_helper
 {
 private:
-	shared_ptr<vector<shared_ptr<bank>>> banks_{};
+	vector<bank*>* banks_{};
 public:
-	menu_helper(shared_ptr<vector<shared_ptr<bank>>> banks);
+	menu_helper(vector<bank*>* banks);
 
 	void process_input();
 	//printing
 	static void print_string(std::string str);
 	static void print_string();
 	static void print_menu();
-	static void print_customers(shared_ptr<bank> bank);
+	static void print_customers(bank* bank);
 	void print_banks();
 	void print_bank_customer_accounts();
 
@@ -33,8 +33,8 @@ public:
 
 
 	//Selection
-	shared_ptr<bank> select_bank(string display_message = "select bank\n");
-	shared_ptr<customer_account> select_customer_account(
-		shared_ptr<bank> bank, const string display_message = "select customer account\n") const;
+	bank* select_bank(string display_message = "select bank\n");
+	customer_account* select_customer_account(
+		bank* bank, const string display_message = "select customer account\n") const;
 	double select_amount() const;
 };

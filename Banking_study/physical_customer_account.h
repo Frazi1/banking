@@ -4,7 +4,6 @@
 class physical_customer_account : public customer_account
 {
 public:
-	physical_customer_account(double savings, customer customer, long id, shared_ptr<bank> bank);
-
-	void transfer(shared_ptr<account_base> target_account, double amount) override;
+	physical_customer_account(double, customer, long, bank* bank);
+	void transfer(account_base* target_account, double amount) override;
 };

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 
-account_base::account_base(const double savings, const shared_ptr<bank> bank): savings_(savings),
+account_base::account_base(const double savings, bank* bank): savings_(savings),
                                                               bank_(bank)
 {
 }
@@ -11,7 +11,7 @@ double account_base::get_savings() const
 	return savings_;
 }
 
-shared_ptr<bank> account_base::get_bank() const
+bank* account_base::get_bank() const
 {
 	return bank_;
 }
