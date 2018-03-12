@@ -147,24 +147,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AccountBase.h" />
     <ClInclude Include="Bank.h" />
     <ClInclude Include="BankAccount.h" />
     <ClInclude Include="BankingException.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="CustomerAccount.h" />
+    <ClInclude Include="juridic_customer_account.h" />
     <ClInclude Include="MenuHelper.h" />
+    <ClInclude Include="physical_customer_account.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringFormatter.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AccountBase.cpp" />
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="BankAccount.cpp" />
     <ClCompile Include="BankingException.cpp" />
     <ClCompile Include="Banking_study.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="CustomerAccount.cpp" />
+    <ClCompile Include="juridic_customer_account.cpp" />
     <ClCompile Include="MenuHelper.cpp" />
+    <ClCompile Include="physical_customer_account.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
