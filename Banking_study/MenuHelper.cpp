@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Bank.h"
 #include "StringFormatter.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -36,6 +37,12 @@ void menu_helper::process_input()
 	case 6:
 		print_bank_customer_accounts();
 		break;
+	case 7:
+		delete_bank();
+		break;
+	case 8:
+		delete_customer();
+		break;
 	default: ;
 	}
 }
@@ -49,6 +56,8 @@ void menu_helper::print_menu()
 	items.push_back("4. Transfer money");
 	items.push_back("5. Print banks");
 	items.push_back("6. Print bank customers");
+	items.push_back("7. Delete bank");
+	items.push_back("8. Delete customer");
 
 	for (const string item : items)
 		print_string(item);
@@ -115,6 +124,23 @@ double menu_helper::select_amount() const
 {
 	print_string("select amount\n");
 	return read_double();
+}
+
+void menu_helper::delete_bank()
+{
+	bank* target = select_bank();
+	banks_->erase(remove_if(banks_->begin(),
+	                        banks_->end(),
+	                        [target](bank* bank) { return bank == target; }),
+	              banks_->end());
+	delete target;
+}
+
+void menu_helper::delete_customer()
+{
+	bank* target_bank = select_bank();
+	customer_account* target_customer = select_customer_account(target_bank);
+	target_bank->delete_customer_account([&target_customer](customer_account* a) { return a == target_customer; });
 }
 
 void menu_helper::add_bank()

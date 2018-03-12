@@ -37,4 +37,8 @@ public:
 	customer_account* select_customer_account(
 		bank* bank, const string display_message = "select customer account\n") const;
 	double select_amount() const;
+
+	//Detetion
+	void delete_bank();
+	void delete_customer();
 };

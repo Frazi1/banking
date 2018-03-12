@@ -8,7 +8,11 @@ bank::bank(const double savings, const float comission, const string name): name
 }
 
 bank::~bank()
-= default;
+{
+	delete account_;
+	for (customer_account* customer_account : customer_accounts_)
+		delete customer_account;
+}
 
 string bank::get_name() const
 {
@@ -31,15 +35,24 @@ void bank::create_customer_account(const string name, customer_type type)
 	customer_account* ca;
 	if (type == customer_type::physical)
 		ca = new physical_customer_account(0, c, customers_count_++, this);
-	else if(type == customer_type::juridic)
+	else if (type == customer_type::juridic)
 		ca = new juridic_customer_account(0, c, customers_count_++, this);
 	else throw banking_exception("Invalid customer type");
 	customer_accounts_.push_back(ca);
 }
 
+void bank::delete_customer_account(function<bool (customer_account*)> predicate)
+{
+	const auto item = find_if(customer_accounts_.begin(), customer_accounts_.end(), predicate);
+	customer_account* ptr = customer_accounts_.at(distance(customer_accounts_.begin(), item));
+	customer_accounts_.erase(remove_if(customer_accounts_.begin(), customer_accounts_.end(), predicate),
+	                         customer_accounts_.end());
+	customers_count_--;
+	delete ptr;
+}
+
 void bank::put_money(long customer_id, const double amount)
 {
-	//TODO: maybe reference?
 	const auto it = find_if(
 		customer_accounts_.begin(), customer_accounts_.end(),
 		[&customer_id](customer_account* a)

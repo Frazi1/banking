@@ -3,14 +3,6 @@
 #include <cstdarg>  // For va_start, etc.
 #include <memory>    // For std::unique_ptr
 
-string_formatter::string_formatter()
-{
-}
-
-
-string_formatter::~string_formatter()
-{
-}
 
 std::string string_formatter::format(const std::string fmt_str, ...) {
 	int n = static_cast<int>(fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
