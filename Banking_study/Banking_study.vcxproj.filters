@@ -45,10 +45,10 @@
     <ClInclude Include="AccountBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="juridic_customer_account.h">
+    <ClInclude Include="PhysicalCustomerAccount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="physical_customer_account.h">
+    <ClInclude Include="JuridicCustomerAccount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,10 +83,10 @@
     <ClCompile Include="AccountBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="juridic_customer_account.cpp">
+    <ClCompile Include="PhysicalCustomerAccount.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="physical_customer_account.cpp">
+    <ClCompile Include="JuridicCustomerAccount.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
