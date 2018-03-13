@@ -3,12 +3,13 @@
 #include <iostream>
 #include "Bank.h"
 #include "StringFormatter.h"
-#include <algorithm>
+#include <iomanip>
+
 
 using namespace std;
 
 
-menu_helper::menu_helper(vector<bank*>* banks) : banks_(banks)
+menu_helper::menu_helper(vector<bank*>* banks, vector<customer*>* customers) : banks_(banks), customers_(customers)
 {
 }
 
@@ -81,6 +82,34 @@ double menu_helper::read_double()
 	return stod(read_string());
 }
 
+time_t menu_helper::read_date()
+{
+	tm date;
+	const string input = select_string("Date:");
+	stringstream ss(input);
+	ss.imbue(locale("en_US"));
+	ss >> get_time(&date, "")
+		//TODO: continue
+}
+
+int menu_helper::select_int(string msg)
+{
+	print_string(msg);
+	return read_int();
+}
+
+string menu_helper::select_string(string msg)
+{
+	print_string(msg);
+	return read_string();
+}
+
+double menu_helper::select_double(string msg)
+{
+	print_string(msg);
+	return read_double();
+}
+
 void menu_helper::put_customer_money()
 {
 	bank* bank = select_bank();
@@ -151,6 +180,22 @@ void menu_helper::add_bank()
 	banks_->push_back(a);
 }
 
+physical_customer* menu_helper::create_physical_customer()
+{
+	int series = select_int("Passport series:");
+	int number = select_int("Passport number");
+	string registration_place = select_string("Registration place:");
+
+	physical_customer* c = new physical_customer(new passport())
+}
+
+void menu_helper::create_customer()
+{
+	const customer_type type = select_customer_type();
+	if (type == customer_type::physical)
+		customers_->push_back(create_physical_customer());
+}
+
 void menu_helper::print_banks()
 {
 	for (int i = 0; i < banks_->size(); i++)
@@ -194,12 +239,17 @@ void menu_helper::print_customers(bank* bank)
 	}
 }
 
+customer_type menu_helper::select_customer_type() const
+{
+	print_string("customer type: 1.physical, 2.juridic");
+	return static_cast<customer_type>(read_int());
+}
+
 void menu_helper::create_customer_account()
 {
 	bank* bank = select_bank();
 
-	print_string("customer type: 1.physical, 2.juridic");
-	const customer_type type = static_cast<customer_type>(read_int());
+	const customer_type type = select_customer_type();
 	print_string("customer name:");
 	const string name = read_string();
 	bank->create_customer_account(name, type);

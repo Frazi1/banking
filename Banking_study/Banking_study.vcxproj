@@ -153,8 +153,11 @@
     <ClInclude Include="BankingException.h" />
     <ClInclude Include="Customer.h" />
     <ClInclude Include="CustomerAccount.h" />
+    <ClInclude Include="JuridicCustomer.h" />
     <ClInclude Include="JuridicCustomerAccount.h" />
     <ClInclude Include="MenuHelper.h" />
+    <ClInclude Include="Passport.h" />
+    <ClInclude Include="PhysicalCustomer.h" />
     <ClInclude Include="PhysicalCustomerAccount.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringFormatter.h" />
@@ -168,8 +171,11 @@
     <ClCompile Include="Banking_study.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="CustomerAccount.cpp" />
+    <ClCompile Include="JuridicCustomer.cpp" />
     <ClCompile Include="JuridicCustomerAccount.cpp" />
     <ClCompile Include="MenuHelper.cpp" />
+    <ClCompile Include="Passport.cpp" />
+    <ClCompile Include="PhysicalCustomer.cpp" />
     <ClCompile Include="PhysicalCustomerAccount.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
