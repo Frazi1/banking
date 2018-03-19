@@ -27,5 +27,5 @@ std::string string_formatter::format(const std::string fmt_str, ...)
 
 std::string string_formatter::date_to_str(std::tm tm)
 {
-	return format("%d/%d/%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year);
+	return format("%d/%d/%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 }
