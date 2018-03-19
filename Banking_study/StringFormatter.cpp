@@ -4,11 +4,13 @@
 #include <memory>    // For std::unique_ptr
 
 
-std::string string_formatter::format(const std::string fmt_str, ...) {
+std::string string_formatter::format(const std::string fmt_str, ...)
+{
 	int n = static_cast<int>(fmt_str.size()) * 2; /* Reserve two times as much as the length of the fmt_str */
 	std::unique_ptr<char[]> formatted;
 	va_list ap;
-	while (true) {
+	while (true)
+	{
 		formatted.reset(new char[n]); /* Wrap the plain char array into the unique_ptr */
 #pragma warning(suppress : 4996)
 		strcpy(&formatted[0], fmt_str.c_str());
@@ -23,7 +25,7 @@ std::string string_formatter::format(const std::string fmt_str, ...) {
 	return std::string(formatted.get());
 }
 
-std::string string_formatter::get_date_format()
+std::string string_formatter::date_to_str(std::tm tm)
 {
-	return "d/m/Y";
+	return format("%d/%d/%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year);
 }

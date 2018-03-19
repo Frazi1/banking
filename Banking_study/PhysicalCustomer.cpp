@@ -52,12 +52,10 @@ string physical_customer::get_full_info() const
 
 string physical_customer::get_short_info() const
 {
-	tm registration_date = get_registration_date();
-	cout << put_time(&registration_date, "%d/%m/%Y") << endl;
 	return string_formatter::format("%s %s - %s", 
 		get_first_name().c_str(),
 		get_last_name().c_str(),
-		put_time(&registration_date,"%d/%m/%Y"));
+		string_formatter::date_to_str(get_registration_date()).c_str());
 }
 
 customer_type physical_customer::get_customer_type()
