@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "stdafx.h"
-#include <memory>
 
 using namespace std;
 
@@ -17,9 +16,9 @@ protected:
 	void check_withdraw_amount(double amount) const;
 
 public:
+	account_base(double, bank* bank);
 	virtual ~account_base() = default;
 
-	account_base(double, bank* bank);
 	double get_savings() const;
 	bank* get_bank() const;
 

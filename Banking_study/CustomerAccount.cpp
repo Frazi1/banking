@@ -1,15 +1,8 @@
 #include "stdafx.h"
 
-customer_account::customer_account(const double savings, customer* customer, const long id,
-                                   bank* bank)
-	: account_base(savings, bank), customer_(customer), id_(id)
+customer_account::customer_account(const long id, const double savings, bank* bank)
+	: account_base(savings, bank), id_(id)
 {
-}
-
-
-customer* customer_account::get_customer() const
-{
-	return customer_;
 }
 
 long customer_account::get_id() const
@@ -17,10 +10,9 @@ long customer_account::get_id() const
 	return id_;
 }
 
-
-void customer_account::set_customer(customer* customer)
+void customer_account::set_id(const long id)
 {
-	customer_ = customer;
+	id_ = id;
 }
 
 void customer_account::accept_transfer(const double amount)

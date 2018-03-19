@@ -22,3 +22,8 @@ std::string string_formatter::format(const std::string fmt_str, ...) {
 	}
 	return std::string(formatted.get());
 }
+
+std::string string_formatter::get_date_format()
+{
+	return "d/m/Y";
+}

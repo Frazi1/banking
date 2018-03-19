@@ -25,7 +25,7 @@ public:
 	double get_savings() const;
 	vector<customer_account*>& get_customer_accounts();
 
-	void create_customer_account(const string name, customer_type type);
+	void create_customer_account(customer* customer);
 	void delete_customer_account(function<bool(customer_account*)> predicate);
 	
 	void put_money(long, double);

@@ -29,14 +29,13 @@ vector<customer_account*>& bank::get_customer_accounts()
 	return customer_accounts_;
 }
 
-void bank::create_customer_account(const string name, customer_type type)
+void bank::create_customer_account(customer* customer)
 {
-	customer c = customer(name);
 	customer_account* ca;
-	if (type == customer_type::physical)
-		ca = new physical_customer_account(0, c, customers_count_++, this);
-	else if (type == customer_type::juridic)
-		ca = new juridic_customer_account(0, c, customers_count_++, this);
+	if (customer->get_customer_type() == customer_type::physical)
+		ca = new physical_customer_account(0, static_cast<physical_customer*>(customer), customers_count_++, this);
+	else if (customer->get_customer_type() == customer_type::juridic)
+		ca = new juridic_customer_account(0, static_cast<juridic_customer*>(customer), customers_count_++, this);
 	else throw banking_exception("Invalid customer type");
 	customer_accounts_.push_back(ca);
 }
@@ -45,7 +44,9 @@ void bank::delete_customer_account(function<bool (customer_account*)> predicate)
 {
 	const auto item = find_if(customer_accounts_.begin(), customer_accounts_.end(), predicate);
 	customer_account* ptr = customer_accounts_.at(distance(customer_accounts_.begin(), item));
-	customer_accounts_.erase(remove_if(customer_accounts_.begin(), customer_accounts_.end(), predicate),
+	customer_accounts_.erase(remove_if(customer_accounts_.begin(),
+	                                   customer_accounts_.end(),
+	                                   predicate),
 	                         customer_accounts_.end());
 	customers_count_--;
 	delete ptr;
