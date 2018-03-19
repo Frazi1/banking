@@ -68,5 +68,5 @@ string juridic_customer::get_short_info() const
 
 customer_type juridic_customer::get_customer_type()
 {
-	return customer_type::physical;
+	return customer_type::juridic;
 }

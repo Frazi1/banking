@@ -87,8 +87,7 @@ void bank::transfer_money(account_base* source, account_base* destination, const
 			throw banking_exception(string_formatter::format("Tried to withdraw %f. Bank has only %f. Sorry",
 			                                                 withdrawed,
 			                                                 account_->get_savings()));
-		account_->withdraw(withdrawed);
-
+		account_->withdraw(result_amount);
 		destination->accept_transfer(result_amount);
 	}
 	else
