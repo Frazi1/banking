@@ -91,17 +91,15 @@ double menu_helper::read_double()
 	return stod(read_string());
 }
 
-tm menu_helper::read_date()
+tm menu_helper::select_date(const string msg)
 {
 	tm date = {};
-	const string input = select_string("Date:");
+	const string input = select_string(msg);
 	istringstream ss(input);
-	//ss.imbue(locale("en_US"));
 	ss.imbue(locale());
 	ss >> get_time(&date, "%d/%m/%Y");
 	if (ss.fail())
 		throw invalid_argument("date parse failed");
-
 	return date;
 }
 
@@ -202,12 +200,12 @@ void menu_helper::add_bank()
 
 physical_customer* menu_helper::create_physical_customer()
 {
-	const string first_name = select_string("first_name");
-	const string last_name = select_string("last name:");
+	const string first_name = select_string("First_name");
+	const string last_name = select_string("Last name:");
 	const int series = select_int("Passport series:");
 	const int number = select_int("Passport number");
 	const string registration_place = select_string("Registration place:");
-	const tm registration_date = read_date();
+	const tm registration_date = select_date("Registration date:");
 	physical_customer* c = new physical_customer(first_name, last_name, number, series, registration_place,
 	                                             registration_date);
 	return c;
@@ -215,15 +213,18 @@ physical_customer* menu_helper::create_physical_customer()
 
 customer* menu_helper::create_juridic_customer()
 {
-	const string inn = select_string("inn");
-	const string ogrnip = select_string("ogrnip");
-	const tm registration_date = read_date();
-	const string registration_place = select_string("registration place");
-	const string hometown = select_string("hometown");
-	const string organization_name = select_string("organization name");
-	const string orgranization_type = select_string("ogranization type");
-	juridic_customer* c = new juridic_customer(inn, ogrnip, registration_date, registration_place, hometown,
-	                                           organization_name, orgranization_type);
+	const string inn = select_string("Inn");
+	const string ogrnip = select_string("Ogrnip");
+	const tm registration_date = select_date("Registration date");
+	const string registration_place = select_string("Registration place");
+	const string organization_name = select_string("Organization name");
+	const string orgranization_type = select_string("Ogranization type");
+	juridic_customer* c = new juridic_customer(inn,
+	                                           ogrnip,
+	                                           registration_date,
+	                                           registration_place,
+	                                           organization_name,
+	                                           orgranization_type);
 	return c;
 }
 
@@ -287,7 +288,7 @@ void menu_helper::print_all_customers() const
 		const auto& c = customers_->at(i);
 		print_string(string_formatter::format("%d. %s",
 		                                      i,
-		                                      c->get_short_info().c_str()));
+		                                      c->get_full_info().c_str()));
 	}
 }
 

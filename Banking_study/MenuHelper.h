@@ -33,11 +33,10 @@ public:
 	static string read_string();
 	static int read_int();
 	static double read_double();
-	static tm read_date();
 	static int select_int(string msg);
 	static string select_string(string msg);
 	static double select_double(string msg);
-
+	static tm select_date(string msg = "date");
 
 	//Money
 	void put_customer_money();
